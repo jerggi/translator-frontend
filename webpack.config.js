@@ -1,3 +1,6 @@
+// const nodeEnv = process.env.NODE_ENV || 'development';
+// const isProd = nodeEnv === 'production';
+
 module.exports = {
    entry: './main.js',
 	
@@ -8,8 +11,17 @@ module.exports = {
 	
    devServer: {
       inline: true,
-      port: 8080,
-      hot: true
+      port: 3003,
+      hot: true,
+      proxy: [
+            {
+                context: ['/api'],
+                // target: 'https://dashboard.virtub.io',
+                target: 'http://localhost:3000',
+                secure: false,
+                changeOrigin: true
+            }
+        ]
    },
 	
    module: {
