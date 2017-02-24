@@ -8,7 +8,8 @@ import { muiTheme } from './_muiTheme';
 
 class App extends React.Component {
     componentWillMount() {
-        var payload = {
+        // this.context.router.push({ pathname: '/translate' });
+        /*var payload = {
             a: 1,
             b: 2
         };
@@ -24,7 +25,7 @@ class App extends React.Component {
             },
             method: "POST",
             body: JSON.stringify( payload ) 
-        })
+        })*/
     }
 
     render() {
@@ -32,13 +33,6 @@ class App extends React.Component {
             <div>
                 <MuiThemeProvider muiTheme={muiTheme}>
                     <div>
-                        <h4>Hello World!!!</h4>
-                        <TextField
-                            hintText="Password Field"
-                            floatingLabelText="Password"
-                        /><br />
-                        <Link to="/test">Test</Link>
-
                         {this.props.children}
                     </div>
                 </MuiThemeProvider>
