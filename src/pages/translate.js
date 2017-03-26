@@ -51,9 +51,9 @@ class Translate extends Component {
 
     render() {
         return (
-            <div style={{ padding: '0px 30px' }}>
+            <div style={{ padding: '30px 30px' }}>
                 <div>
-                    <TextField name="word" onChange={(e) => this.handleWordChange(e)} />
+                    <TextField name="word" onChange={(e) => this.handleWordChange(e)} floatingLabelText="Word"/>
                     <FlatButton label="Search" onClick={() => this.translate()} />
 
                     <Select

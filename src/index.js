@@ -4,9 +4,11 @@ import { Router, Route, Link, hashHistory, IndexRoute } from 'react-router';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
 
-import App from './src/App.jsx';
-import Translate from './src/pages/translate';
-import Dictionaries from './src/pages/dictionaries';
+import App from './App';
+import Translate from './pages/translate';
+import Dictionaries from './pages/dictionaries';
+
+import './index.less';
 
 const NotFound = React.createClass({
     render() {
