@@ -22,8 +22,8 @@ const Navbar = ({ title }) => (
                 anchorOrigin={{horizontal: 'left', vertical: 'top'}}
             >
                 <MenuItem primaryText={
-                    <Link to="/dictionaries" >
-                            Dictionaries
+                    <Link to="/dictionaries" style={{ textDecoration: 'none' }} >
+                        Dictionaries
                     </Link>
                 } />
                 <MenuItem primaryText="Help" />

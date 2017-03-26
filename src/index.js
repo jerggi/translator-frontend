@@ -1,14 +1,22 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Router, Route, Link, hashHistory, IndexRoute } from 'react-router';
-import injectTapEventPlugin from 'react-tap-event-plugin';
-injectTapEventPlugin();
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { Router, Route, Link, browserHistory, IndexRoute } from 'react-router'
+import { Provider } from 'react-redux'
+import { syncHistoryWithStore } from 'react-router-redux'
 
-import App from './App';
-import Translate from './pages/translate';
-import Dictionaries from './pages/dictionaries';
+import injectTapEventPlugin from 'react-tap-event-plugin'
+injectTapEventPlugin()
 
-import './index.less';
+import App from './App'
+import Translate from './pages/translate'
+import Dictionaries from './pages/dictionaries'
+
+import configureStore from './utils/store'
+
+import './index.less'
+
+const store = configureStore()
+const history = syncHistoryWithStore(browserHistory, store)
 
 const NotFound = React.createClass({
     render() {
@@ -17,11 +25,13 @@ const NotFound = React.createClass({
 })
 
 ReactDOM.render((
-    <Router history={hashHistory}>
-        <Route path="/" component={App}>
-            <IndexRoute component={Translate} />
-            <Route path="dictionaries" component={Dictionaries}/>
-            <Route path="*" component={NotFound}/>
-        </Route>
-    </Router>
-), document.getElementById('app'));
+    <Provider store={store} >
+        <Router history={history}>
+            <Route path="/" component={App}>
+                <IndexRoute component={Translate} />
+                <Route path="dictionaries" component={Dictionaries}/>
+                <Route path="*" component={NotFound}/>
+            </Route>
+        </Router>
+    </Provider>
+), document.getElementById('app'))

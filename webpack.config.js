@@ -14,6 +14,7 @@ module.exports = {
     devServer: {
         inline: true,
         port: 3003,
+        historyApiFallback: true,
         hot: true,
         proxy: [
             {
