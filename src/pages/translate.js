@@ -1,39 +1,36 @@
-import React, { Component, PropTypes } from 'react';
-import FlatButton from 'material-ui/FlatButton';
-import TextField from 'material-ui/TextField';
-import Select from 'react-select';
-import { map, sortBy } from 'lodash';
+import React, { Component, PropTypes } from 'react'
+import FlatButton from 'material-ui/FlatButton'
+import TextField from 'material-ui/TextField'
+import Select from 'react-select'
+import { map, sortBy } from 'lodash'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 
-import TranslateTable from '../components/translateTable';
-import { translate, getDictList } from '../api/translate';
+//import { getDictList, translate } from '../actions/translateActions'
+import * as Actions from '../actions/translateActions'
+import TranslateTable from '../components/TranslateTable'
+// import { translate, getDictList } from '../api/translate'
 
 class Translate extends Component {
     constructor(props) {
-        super(props);
+        super(props)
         this.state = {
             word: '',
-            dicts: [],
-            dictOptions: [],
-            translations: []
-        };
+            selectedDicts: '',
+        }
     }
 
     componentWillMount() {
-        getDictList().then((res) => {
-            res.json().then((options) => {
-                this.setState({
-                    dictOptions: map(options, option => Object.assign({}, { value: option, label: option}))
-                })
-            })
-        })
+        const { actions: { getDictList } } = this.props
+
+        getDictList()
     }
 
     translate() {
-        translate(this.state.word, this.state.dicts).then((res) => {
-            res.json().then((translations) => {
-                this.setState({ translations: sortBy(translations, ['distance']) })
-            })
-        })
+        const { actions: { translate } } = this.props
+
+        translate(this.state.word, this.state.selectedDicts)
+        // translations: sortBy(translations, ['distance'])
     }
 
     handleWordChange(event) {
@@ -45,11 +42,14 @@ class Translate extends Component {
 
     handleDictChange (dicts) {
         this.setState({
-            dicts
+            selectedDicts: dicts
         });
     }
 
     render() {
+        const { dicts, translations } = this.props
+        const dictOptions = map(dicts, option => Object.assign({}, { value: option, label: option}))
+
         return (
             <div style={{ padding: '30px 30px' }}>
                 <div>
@@ -58,18 +58,34 @@ class Translate extends Component {
 
                     <Select
                         name="dictionary"
-                        value={this.state.dicts}
-                        options={this.state.dictOptions}
+                        value={this.state.selectedDicts}
+                        options={dictOptions}
                         multi={true}
                         simpleValue={true}
                         onChange={(value) => this.handleDictChange(value)}
                         placeholder="Select dictionaries..."
                     />
                 </div>
-                <TranslateTable translations={this.state.translations}/>
+                <TranslateTable translations={translations}/>
             </div>
         )
     }
-};
+}
 
-export default Translate;
+function mapStateToProps(state) {
+    return {
+        translations: state.translate.translations,
+        dicts: state.translate.dicts,
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        actions: bindActionCreators(Actions, dispatch)
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(Translate)

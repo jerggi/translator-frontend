@@ -1,6 +1,7 @@
 import { createStore, compose, applyMiddleware } from 'redux'
-import { routerMiddleware } from 'react-router-redux';
-import { browserHistory } from 'react-router';
+import { routerMiddleware } from 'react-router-redux'
+import { browserHistory } from 'react-router'
+import thunk from 'redux-thunk'
 
 import reducers from '../reducers'
 
@@ -15,7 +16,7 @@ export default function configureStore(initialState = {}) {
     }
 
     const finalCreateStore = composeEnhancers(
-        applyMiddleware(reduxRouterMiddleware)
+        applyMiddleware(reduxRouterMiddleware, thunk)
     )(createStore)
 
     const store = finalCreateStore(reducers, initialState)

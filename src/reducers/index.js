@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux'
-import { routerReducer as routing } from 'react-router-redux';
-import translationsReducer from './translationsReducer'
+import { routerReducer as routing } from 'react-router-redux'
+import translateReducer from './translateReducer'
+import dictionaryReducer from './dictionaryReducer'
 
 export default combineReducers({
     routing,
-    translations: translationsReducer
+    translate: translateReducer,
+    dictionary: dictionaryReducer,
 })

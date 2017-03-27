@@ -3,6 +3,7 @@ import * as actions from '../actions/constants'
 
 const initialState = {
     translations: [],
+    dicts: []
 }
 
 const translationsReducer = (state = initialState, action) => {
@@ -11,6 +12,11 @@ const translationsReducer = (state = initialState, action) => {
             return {
                 ...state,
                 translations: action.payload.translations
+            }
+        case actions.GET_DICT_LIST:
+            return {
+                ...state,
+                dicts: action.payload.dicts
             }
         default:
             return state

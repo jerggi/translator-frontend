@@ -10,6 +10,7 @@ injectTapEventPlugin()
 import App from './App'
 import Translate from './pages/translate'
 import Dictionaries from './pages/dictionaries'
+import Dictionary from './pages/Dictionary'
 
 import configureStore from './utils/store'
 
@@ -29,7 +30,8 @@ ReactDOM.render((
         <Router history={history}>
             <Route path="/" component={App}>
                 <IndexRoute component={Translate} />
-                <Route path="dictionaries" component={Dictionaries}/>
+                <Route path="dictionaries" component={Dictionaries} />
+                <Route path="dictionaries/:dictionary" component={Dictionary} />
                 <Route path="*" component={NotFound}/>
             </Route>
         </Router>
