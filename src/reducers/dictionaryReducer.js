@@ -1,9 +1,11 @@
 import SORT_OPTIONS from '../utils/constants'
 import * as Actions from '../actions/constants'
 
+import { map, keys } from 'lodash'
+
 const initialState = {
     dictionaries: [],
-    dictionary: {}
+    dictionary: [],
 }
 
 const dictionaryReducer = (state = initialState, action) => {
@@ -16,7 +18,12 @@ const dictionaryReducer = (state = initialState, action) => {
         case Actions.GET_DICTIONARY:
             return {
                 ...state,
-                dictionary: action.payload.dictionary
+                dictionary: map(keys(action.payload.dictionary), key => {
+                    return {
+                        word: key,
+                        translations: action.payload.dictionary[key]
+                    }
+                })
             }
         default:
             return state

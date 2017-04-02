@@ -15,7 +15,6 @@ export function translate(word, dicts) {
 }
 
 export function getDictionaries(params = {}) {
-
     return fetch('/api/dictionary', {
         method: 'GET',
         params,

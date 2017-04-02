@@ -1,0 +1,16 @@
+body {
+  background-color: whitesmoke;
+}
+.dict-table tr {
+  cursor: pointer;
+}
+.dict-table tr a {
+  text-decoration: none;
+}
+.dict-header {
+  padding: 20px 50px;
+}
+.dict-header .dict-header__button {
+  margin: 10px 0px;
+  width: 100%;
+}

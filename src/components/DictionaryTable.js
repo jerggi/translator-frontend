@@ -1,25 +1,30 @@
-import React, { Component, PropTypes } from 'react';
-import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
-import { map, join } from 'lodash';
-import * as C from '../utils/constants';
+import React, { Component, PropTypes } from 'react'
+import { Link } from 'react-router'
+import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table'
+import { map, join } from 'lodash'
+import * as C from '../utils/constants'
 
-const DictionaryTable = ({ dictionaries, handleSelect }) => {
+const DictionaryTable = ({ dictionaries, handleSelect, handleShow }) => {
     return (
-        <Table multiSelectable={true} width="100%" onRowSelection={handleSelect}>
+        <Table selectable={false} width="100%">
             <TableHeader
-                displaySelectAll={true}
-                adjustForCheckbox={true}
-                enableSelectAll={true}
+                displaySelectAll={false}
+                adjustForCheckbox={false}
+                enableSelectAll={false}
             >
                 <TableRow>
                     <TableHeaderColumn>Name</TableHeaderColumn>
                 </TableRow>
             </TableHeader>
-            <TableBody displayRowCheckbox={true}>
+            <TableBody displayRowCheckbox={false} showRowHover={true}>
                 {
                     map(dictionaries, d => (
-                            <TableRow key={d.name}>
-                                <TableRowColumn>{d.name}</TableRowColumn>
+                            <TableRow key={d.name} >
+                                <TableRowColumn>
+                                    <Link to={`dictionaries/${d.name}`}>
+                                        <span>{d.name}</span>
+                                    </Link>
+                                </TableRowColumn>
                             </TableRow>
                         )
                     )
@@ -29,4 +34,4 @@ const DictionaryTable = ({ dictionaries, handleSelect }) => {
     )
 }
 
-export default DictionaryTable;
+export default DictionaryTable

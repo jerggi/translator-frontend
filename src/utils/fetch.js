@@ -12,13 +12,21 @@ const handleErrors = async response => {
     return response;
 };
 
+function getDefaultHeaders() {
+    const headers = new Headers()
+
+    headers.append('Accept', 'application/json')
+    headers.append('Content-Type', 'application/json')
+
+    return headers
+}
 
 export default (url, { params, ...options } = {}) => {
     const queryString = serialize(params);
     const questionMark = isEmpty(queryString) ? '' : '?';
     let opts = options;
 
-    const headers = options.headers || new Headers();
+    const headers = options.headers || getDefaultHeaders();
     opts = {
         ...options,
         headers,
