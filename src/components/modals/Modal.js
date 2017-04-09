@@ -11,6 +11,7 @@ const Modal = ({ open, title, handleSubmit, handleCancel, children }) => {
         />,
         <FlatButton
             label="Submit"
+            type="submit"
             primary={true}
             onTouchTap={handleSubmit}
         />,

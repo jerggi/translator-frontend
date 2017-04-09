@@ -1,25 +1,24 @@
-import React from 'react';
-import { Link } from 'react-router';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import React from 'react'
+import { Link, withRouter } from 'react-router'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import { Col } from 'react-bootstrap'
 
-import TextField from 'material-ui/TextField';
-import Navbar from './components/Navbar.js';
+import TextField from 'material-ui/TextField'
+import Navbar from './components/Navbar.js'
 
-import { muiTheme } from './_muiTheme';
+import { muiTheme } from './_muiTheme'
 
-class App extends React.Component {
-    render() {
-        return (
-            <div>
-                <MuiThemeProvider muiTheme={muiTheme}>
-                    <div>
-                        <Navbar title="Translate" />
-                        {this.props.children}
-                    </div>
-                </MuiThemeProvider>
-            </div>
-        );
-    }
-}
+const App = (props) => (
+  <div>
+    <MuiThemeProvider muiTheme={muiTheme}>
+      <div>
+        <Navbar title={props.router.location.pathname.includes('/dictionaries') ? 'Dictionaries' : 'Translate'} />
+        <Col sm={10} smPush={1} xs={12}>
+          {props.children}
+        </Col>
+      </div>
+    </MuiThemeProvider>
+  </div>
+)
 
-export default App;
+export default withRouter(App)

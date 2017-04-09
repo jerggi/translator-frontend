@@ -30,6 +30,7 @@ ReactDOM.render((
         <Router history={history}>
             <Route path="/" component={App}>
                 <IndexRoute component={Translate} />
+                <Route path="/translate" component={Translate} />
                 <Route path="dictionaries" component={Dictionaries} />
                 <Route path="dictionaries/:dictionary" component={Dictionary} />
                 <Route path="*" component={NotFound}/>

@@ -4,7 +4,7 @@ import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColu
 import { map, join } from 'lodash'
 import * as C from '../utils/constants'
 
-const DictionaryTable = ({ dictionaries, handleSelect, handleShow }) => {
+const DictionariesTable = ({ dictionaries }) => {
     return (
         <Table selectable={false} width="100%">
             <TableHeader
@@ -34,4 +34,4 @@ const DictionaryTable = ({ dictionaries, handleSelect, handleShow }) => {
     )
 }
 
-export default DictionaryTable
+export default DictionariesTable

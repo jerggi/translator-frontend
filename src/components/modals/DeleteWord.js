@@ -18,13 +18,11 @@ const DeleteWord = () => {
     return (
         <div>
             <Row>
-                <Col md={4}><label htmlFor="word">Word</label></Col>
-                <Col md={8}><Field id="word" name="word" component={Input} /></Col>
+                <Col md={8}><Field id="word" name="word" component={Input} label="Word" /></Col>
             </Row>
 
             <Row>
-                <Col md={4}><label htmlFor="translation">Translation</label></Col>
-                <Col md={8}><Field id="translation" name="translation" component={Input} /></Col>
+                <Col md={8}><Field id="translation" name="translation" component={Input} label="Translation" /></Col>
             </Row>
         </div>
     )
