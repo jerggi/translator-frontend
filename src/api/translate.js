@@ -1,29 +1,14 @@
 import fetch from '../utils/fetch'
-import { isEmpty } from 'lodash'
 
 export function translate(word, dicts) {
     const params = { word }
 
-    if (!isEmpty(dicts)) {
-        params['dicts'] = dicts
+    if (dicts.length > 0) {
+        params.dict = dicts
     }
 
     return fetch('/api/translate', {
         method: 'GET',
-        params
-    })
-}
-
-export function getDictionaries(params = {}) {
-    return fetch('/api/dictionary', {
-        method: 'GET',
         params,
-    })
-}
-
-
-export function getDictionary(name) {
-    return fetch(`/api/dictionary/${name}`, {
-        method: 'GET'
     })
 }

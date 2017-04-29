@@ -29,7 +29,9 @@ class Translate extends Component {
     translate() {
         const { actions: { translate } } = this.props
 
-        translate(this.state.word, this.state.selectedDicts)
+        const dicts = this.state.selectedDicts.length > 0 ? this.state.selectedDicts.split(',') : []
+
+        translate(this.state.word, dicts)
         // translations: sortBy(translations, ['distance'])
     }
 
@@ -48,7 +50,7 @@ class Translate extends Component {
 
     render() {
         const { dicts, translations } = this.props
-        const dictOptions = map(dicts, option => Object.assign({}, { value: option, label: option}))
+        const dictOptions = map(dicts, option => Object.assign({}, { value: encodeURIComponent(option), label: option}))
 
         return (
             <div style={{ padding: '30px 30px' }}>

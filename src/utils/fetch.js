@@ -2,7 +2,13 @@ import { isEmpty } from 'lodash';
 
 const context = '';
 
-export const serialize = (obj = {}) => Object.keys(obj).map(key => `${encodeURIComponent(key)}=${encodeURIComponent(obj[key])}`).join('&');
+export const serialize = (obj = {}) => Object.keys(obj).map(key => {
+    if (Array.isArray(obj[key])) {
+        return obj[key].map(param => `${encodeURIComponent(key)}=${encodeURIComponent(param)}`).join('&')
+    } else {
+        return `${encodeURIComponent(key)}=${encodeURIComponent(obj[key])}`
+    }
+}).join('&')
 
 const handleErrors = async response => {
     const r = await response;

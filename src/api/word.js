@@ -1,36 +1,28 @@
 import fetch from '../utils/fetch'
 
-export function addWord(dict, word, translations) {
-    return fetch('/api/dictionary/word', {
+export function addWord(dict, word, translation) {
+    return fetch(`/api/dictionary/${encodeURIComponent(dict)}/word`, {
         method: 'POST',
         body: JSON.stringify({
-            dict,
             word,
-            translations,
+            translation,
         }),
     })
 }
 
-export function changeWord(dict, word, newWord, translation, newTranslation) {
-    return fetch('/api/dictionary/word', {
+export function changeWord(dict, word, newWord, newTranslation) {
+    return fetch(`/api/dictionary/${encodeURIComponent(dict)}/word`, {
         method: 'PUT',
         body: JSON.stringify({
-            dict,
             word,
             newWord,
-            translation,
-            newTranslation
+            newTranslation,
         }),
     })
 }
 
-export function deleteWord(dict, word, translation) {
-    return fetch('/api/dictionary/word', {
+export function deleteWord(dict, word) {
+    return fetch(`/api/dictionary/${encodeURIComponent(dict)}/word/${encodeURIComponent(word)}`, {
         method: 'DELETE',
-        body: JSON.stringify({
-            dict,
-            word,
-            translation,
-        }),
     })
 }

@@ -26,10 +26,6 @@ const ChangeWord = () => {
             </Row>
 
             <Row>
-                <Col md={8}><Field id="translation" name="translation" component={Input} label="Translation" /></Col>
-            </Row>
-
-            <Row>
                 <Col md={8}><Field id="newTranslation" name="newTranslation" component={Input} label="New translation" /></Col>
             </Row>
         </div>

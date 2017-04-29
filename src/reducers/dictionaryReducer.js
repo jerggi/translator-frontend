@@ -5,7 +5,10 @@ import { map, keys } from 'lodash'
 
 const initialState = {
     dictionaries: [],
-    dictionary: [],
+    dictionary: {
+        name: '',
+        words: [],
+    },
 }
 
 const dictionaryReducer = (state = initialState, action) => {
@@ -18,12 +21,15 @@ const dictionaryReducer = (state = initialState, action) => {
         case Actions.GET_DICTIONARY:
             return {
                 ...state,
-                dictionary: map(keys(action.payload.dictionary), key => {
-                    return {
-                        word: key,
-                        translations: action.payload.dictionary[key]
-                    }
-                })
+                dictionary: {
+                    name: action.payload.dictionary.name,
+                    words: map(keys(action.payload.dictionary.words), key => {
+                        return {
+                            word: key,
+                            translation: action.payload.dictionary.words[key]
+                        }
+                    })
+                },
             }
         default:
             return state

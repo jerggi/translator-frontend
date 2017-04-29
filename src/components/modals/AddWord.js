@@ -11,6 +11,10 @@ const validate = (values) => {
         errors.word = 'Required'
     }
 
+    if (!values.translation) {
+        errors.translation = 'Required'
+    }
+
     return errors
 }
 

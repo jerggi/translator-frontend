@@ -23,7 +23,7 @@ const TranslateTable = ( { translations } ) => {
                             <TableRow key={`${t.dict}_${t.key}`}>
                                 <TableRowColumn>{t.word}</TableRowColumn>
                                 <TableRowColumn style={{ color: C.WORD_COLOR[t.distance] }}>{t.key}</TableRowColumn>
-                                <TableRowColumn style={{ whiteSpace: 'pre-line' }}>{join(t.values, ', ')}</TableRowColumn>
+                                <TableRowColumn style={{ whiteSpace: 'pre-line' }}>{t.translation}</TableRowColumn>
                             </TableRow>
                         )
                     )

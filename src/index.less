@@ -3,6 +3,10 @@ body {
 }
 
 .dict-table {
+    .dict-table__header {
+        margin: 20px 50px;
+    }
+
     tr {
         cursor: pointer;
         a {
@@ -18,15 +22,9 @@ body {
 
     .dict-word {
         border-bottom: 1px solid #e0e0e0;
-        i {
-            visibility: hidden;
-        }
-    }
-
-    .dict-word:hover {
-        i {
-            visibility: visible !important;
-        }
+        display: flex;
+        align-items: center;
+        flex-direction: row;
     }
 }
 

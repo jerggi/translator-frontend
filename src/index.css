@@ -1,6 +1,9 @@
 body {
   background-color: whitesmoke;
 }
+.dict-table .dict-table__header {
+  margin: 20px 50px;
+}
 .dict-table tr {
   cursor: pointer;
 }
@@ -14,12 +17,9 @@ body {
 }
 .dict-words .dict-word {
   border-bottom: 1px solid #e0e0e0;
-}
-.dict-words .dict-word i {
-  visibility: hidden;
-}
-.dict-words .dict-word:hover i {
-  visibility: visible !important;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
 }
 .dict-header {
   padding: 20px 50px;

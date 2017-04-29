@@ -23,6 +23,7 @@ const Modal = ({ open, title, handleSubmit, handleCancel, children }) => {
             actions={actions}
             modal={true}
             open={open}
+            autoDetectWindowHeight={false}
         >
             {children}
         </Dialog>

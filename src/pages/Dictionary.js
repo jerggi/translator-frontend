@@ -1,15 +1,15 @@
 import React, { Component, PropTypes } from 'react'
-import { List, WindowScroller, AutoSizer } from 'react-virtualized';
+import { List, WindowScroller, AutoSizer } from 'react-virtualized'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import RaisedButton from 'material-ui/RaisedButton'
 import IconButton from 'material-ui/IconButton'
-import Avatar from 'material-ui/Avatar';
-import IconMenu from 'material-ui/IconMenu';
-import MenuItem from 'material-ui/MenuItem';
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-import Divider from 'material-ui/Divider';
+import Avatar from 'material-ui/Avatar'
+import IconMenu from 'material-ui/IconMenu'
+import MenuItem from 'material-ui/MenuItem'
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
+import Divider from 'material-ui/Divider'
 
 import { Row, Col, Panel } from 'react-bootstrap'
 import { map, join, isEmpty } from 'lodash'
@@ -17,6 +17,7 @@ import { map, join, isEmpty } from 'lodash'
 import Modal from '../components/modals/Modal'
 import ChangeWordForm from '../components/modals/ChangeWord'
 import AddWordForm from '../components/modals/AddWord'
+import DeleteWordModal from '../components/modals/DeleteWord'
 
 import * as Actions from '../actions/dictionaryActions'
 import * as Api from '../api/word'
@@ -32,7 +33,7 @@ class Dictionary extends Component {
       open: false,
       initialValues: {},
     },
-    deleteWordForm: {
+    deleteWordModal: {
       open: false,
       initialValues: {},
     },
@@ -47,11 +48,11 @@ class Dictionary extends Component {
       return
     }
 
-    const word = addWordForm.values.word ? addWordForm.values.word : ''
-    const translations = addWordForm.values.translation ? [addWordForm.values.translation] : ['']
+    const word = addWordForm.values.word
+    const translation = addWordForm.values.translation
 
     try {
-      await Api.addWord(dictionary, word, translations)
+      await Api.addWord(dictionary, word, translation)
 
       this.closeModal()
       this.getDictionary()
@@ -68,13 +69,12 @@ class Dictionary extends Component {
       return
     }
 
-    const word = changeWordForm.values.word ? changeWordForm.values.word : ''
-    const newWord = changeWordForm.values.newWord ? changeWordForm.values.newWord : ''
-    const translation = changeWordForm.values.translation ? changeWordForm.values.translation : ''
-    const newTranslation = changeWordForm.values.newTranslation ? changeWordForm.values.newTranslation : ''
+    const word = changeWordForm.values.word
+    const newWord = changeWordForm.values.newWord ? changeWordForm.values.newWord : null
+    const newTranslation = changeWordForm.values.newTranslation
 
     try {
-      await Api.changeWord(dictionary, word, newWord, translation, newTranslation)
+      await Api.changeWord(dictionary, word, newWord, newTranslation)
 
       this.closeModal()
       this.getDictionary()
@@ -85,17 +85,10 @@ class Dictionary extends Component {
 
   deleteWord = async () => {
     const { params: { dictionary } } = this.props.router
-    const { deleteWordForm } = this.props.form
-
-    if (deleteWordForm.syncErrors) {
-      return
-    }
-
-    const word = deleteWordForm.values.word ? deleteWordForm.values.word : ''
-    const translation = deleteWordForm.values.translation ? deleteWordForm.values.translation : ''
+    const word = this.state.deleteWordModal.initialValues.word
 
     try {
-      await Api.deleteWord(dictionary, word, translations)
+      await Api.deleteWord(dictionary, word)
 
       this.closeModal()
       this.getDictionary()
@@ -134,60 +127,57 @@ class Dictionary extends Component {
         open: false,
         initialValues: {},
       },
-      deleteWordForm: {
+      deleteWordModal: {
         open: false,
         initialValues: {},
       },
     })
   }
 
-  render() {
-    const { params: { dictionary } } = this.props.router
-    const words = this.props.dictionary
+  rowRenderer = ({ key, index, style }) => {
+    const words = this.props.dictionary.words
 
-    const rowRenderer = ({ key, index, style }) => (
+    return (
       <div key={key} style={style} className="dict-word">
-        <div>
-          <IconMenu
-            iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
-            anchorOrigin={{ horizontal: 'left', vertical: 'top' }}
-            targetOrigin={{ horizontal: 'left', vertical: 'top' }}
-          >
-            <p style={{ marginLeft: '10px' }}>Word <b>{words[index].word}</b></p>
-            <Divider />
-            <MenuItem primaryText="Add translation" onClick={() => this.openModal('addWordForm', { word: words[index].word })} />
-            <MenuItem primaryText="Change word" onClick={() => this.openModal('changeWorldForm', { word: words[index].word })} />
-            <MenuItem primaryText="Delete word" onClick={() => this.openModal('deleteWordForm', { word: words[index].word })} />
-          </IconMenu>
-          <span>{words[index].word}: {words[index].translations.join('; ')}</span>
+        <IconMenu
+          iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+          anchorOrigin={{ horizontal: 'left', vertical: 'top' }}
+          targetOrigin={{ horizontal: 'left', vertical: 'top' }}
+        >
+          <p style={{ marginLeft: '10px' }}>Word <b>{words[index].word}</b></p>
+          <Divider />
+          <MenuItem primaryText="Change word" onClick={() => this.openModal('changeWorldForm', { word: words[index].word, newTranslation: words[index].translation })} />
+          <MenuItem primaryText="Delete word" onClick={() => this.openModal('deleteWordModal', { word: words[index].word })} />
+        </IconMenu>
+        <div style={{ display: 'block' }}>
+          <div style={{ color: '#049be5' }}>{words[index].word}</div>
+          <div>{words[index].translation}</div>
         </div>
       </div>
     )
+  }
+
+  render() {
+    const { params: { dictionary } } = this.props.router
+    const words = this.props.dictionary.words
 
     return (
       <div>
         <div className="dict-header">
           <Panel>
             <Col sm={6} xs={12}>
-
-                <h1 style={{ marginBottom: '20px' }}>{dictionary}</h1>
-                {!this.state.dictShowed && <RaisedButton onClick={this.getDictionary} label="Load dictionary" />}
-  
+              <h1 style={{ marginBottom: '20px' }}>{dictionary}</h1>
             </Col>
             <Col sm={6} xs={12}>
               <Row>
                 <Col md={6} mdPush={3} sm={12} >
-                  <RaisedButton className="dict-header__button" label="Add world" onClick={() => this.openModal('addWordForm')} />
+                  <RaisedButton className="dict-header__button" label="Add word" onClick={() => this.openModal('addWordForm')} />
                 </Col>
               </Row>
+
               <Row>
                 <Col md={6} mdPush={3} sm={12}>
-                  <RaisedButton className="dict-header__button" label="Change world" onClick={() => this.openModal('changeWorldForm')} />
-                </Col>
-              </Row>
-              <Row>
-                <Col md={6} mdPush={3} sm={12}>
-                  <RaisedButton className="dict-header__button" label="Delete world" onClick={() => this.openModal('deleteWordForm')} />
+                  <RaisedButton className="dict-header__button" label="Load dictionary" onClick={this.getDictionary} disabled={this.state.dictShowed} />
                 </Col>
               </Row>
             </Col>
@@ -201,8 +191,8 @@ class Dictionary extends Component {
             <ChangeWordForm initialValues={this.state.changeWorldForm.initialValues} />
           </Modal>
 
-          <Modal title="Delete word" open={this.state.deleteWordForm.open} handleSubmit={this.deleteWord} handleCancel={this.closeModal} >
-            <ChangeWordForm initialValues={this.state.deleteWordForm.initialValues} />
+          <Modal title="Delete word" open={this.state.deleteWordModal.open} handleSubmit={this.deleteWord} handleCancel={this.closeModal} >
+            <DeleteWordModal word={this.state.deleteWordModal.initialValues.word} />
           </Modal>
         </div>
         <div className="dict-words">
@@ -213,8 +203,8 @@ class Dictionary extends Component {
                 height={height}
                 width={width}
                 rowCount={words.length}
-                rowHeight={70}
-                rowRenderer={rowRenderer}
+                rowHeight={100}
+                rowRenderer={this.rowRenderer}
 
               />
             )}

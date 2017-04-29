@@ -1,5 +1,6 @@
 import * as C from './constants'
 import * as Api from '../api/translate'
+import { getDictionaries } from '../api/dictionary'
 
 export const translate = (word, dicts) => async dispatch => {
     try {
@@ -19,7 +20,7 @@ export const translate = (word, dicts) => async dispatch => {
 
 export const getDictList = () => async dispatch => {
     try {
-        const response = await Api.getDictionaries()
+        const response = await getDictionaries()
         const dicts = await response.json()
 
         dispatch({
