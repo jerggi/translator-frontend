@@ -18,6 +18,7 @@ class Translate extends Component {
         this.state = {
             word: '',
             selectedDicts: '',
+            isLoading: false,
         }
     }
 
@@ -37,12 +38,16 @@ class Translate extends Component {
 
     }
 
-    translate() {
+    async translate () {
         const { actions: { translate } } = this.props
 
         const dicts = this.state.selectedDicts.length > 0 ? this.state.selectedDicts.split(',') : []
 
-        translate(this.state.word, dicts)
+        if (this.state.word) {
+            this.setState({ isLoading: true })
+            await translate(this.state.word, dicts)
+            this.setState({ isLoading: false })
+        }
         // translations: sortBy(translations, ['distance'])
     }
 
@@ -50,6 +55,13 @@ class Translate extends Component {
         this.setState({
             word: event.target.value,
         });
+    }
+
+    handleKeyDown = (e) => {
+        if (e.keyCode == 13 && !this.state.isLoading) {
+            e.preventDefault()
+            this.translate()
+        }
     }
 
 
@@ -63,13 +75,14 @@ class Translate extends Component {
 
     render() {
         const { dicts, translations } = this.props
+        const isLoading = this.state.isLoading
         const dictOptions = map(dicts, option => Object.assign({}, { value: encodeURIComponent(option.name), label: option.name}))
 
         return (
             <div style={{ padding: '30px 30px' }}>
-                <div>
-                    <TextField name="word" onChange={(e) => this.handleWordChange(e)} floatingLabelText="Word"/>
-                    <FlatButton label="Search" onClick={() => this.translate()} />
+                <div style={{ marginBottom: '30px' }}>
+                    <TextField name="word" style={{ width: '55%' }} onChange={(e) => this.handleWordChange(e)} floatingLabelText="Word" onKeyDown={this.handleKeyDown}/>
+                    <FlatButton label={isLoading ? 'Loading...' : 'Search'} onClick={() => this.translate()} disabled={isLoading}/>
 
                     <Select
                         name="dictionary"

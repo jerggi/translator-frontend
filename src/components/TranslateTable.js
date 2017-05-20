@@ -14,6 +14,7 @@ const TranslateTable = ( { translations } ) => {
                 <TableRow>
                     <TableHeaderColumn>Word</TableHeaderColumn>
                     <TableHeaderColumn>Match</TableHeaderColumn>
+                    <TableHeaderColumn>Dictionary</TableHeaderColumn>
                     <TableHeaderColumn>Translation</TableHeaderColumn>
                 </TableRow>
             </TableHeader>
@@ -23,6 +24,7 @@ const TranslateTable = ( { translations } ) => {
                             <TableRow key={`${t.dict}_${t.key}`}>
                                 <TableRowColumn>{t.word}</TableRowColumn>
                                 <TableRowColumn style={{ color: C.WORD_COLOR[t.distance] }}>{t.key}</TableRowColumn>
+                                <TableRowColumn>{t.dict}</TableRowColumn>
                                 <TableRowColumn style={{ whiteSpace: 'pre-line' }}>{t.translation}</TableRowColumn>
                             </TableRow>
                         )
