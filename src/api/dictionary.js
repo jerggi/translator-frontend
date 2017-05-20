@@ -23,7 +23,6 @@ export function createDictionary(name) {
     })
 }
 
-// change name to id
 export function deleteDictionary(name) {
     return fetch(`/api/dictionary/${encodeURIComponent(name)}`, {
         method: 'DELETE'

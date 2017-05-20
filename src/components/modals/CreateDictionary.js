@@ -1,6 +1,5 @@
 import React from 'react'
 import { Field, reduxForm } from 'redux-form'
-import { Row, Col } from 'react-bootstrap'
 
 import Input from './Input'
 
@@ -21,9 +20,7 @@ const validate = (values) => {
 const CreateDictionary = () => {
     return (
         <div>
-            <Row>
-                <Col md={8}><Field id="name" name="name" component={Input} label="Name" /></Col>
-            </Row>
+            <Field id="name" name="name" component={Input} label="Name" />
         </div>
     )
 }

@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { List, WindowScroller, AutoSizer } from 'react-virtualized'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
 
 import RaisedButton from 'material-ui/RaisedButton'
 import IconButton from 'material-ui/IconButton'
@@ -18,9 +19,11 @@ import Modal from '../components/modals/Modal'
 import ChangeWordForm from '../components/modals/ChangeWord'
 import AddWordForm from '../components/modals/AddWord'
 import DeleteWordModal from '../components/modals/DeleteWord'
+import DeleteDictionaryModal from '../components/modals/DeleteDictionary'
 
 import * as Actions from '../actions/dictionaryActions'
 import * as Api from '../api/word'
+import * as DictApi from '../api/dictionary'
 
 
 class Dictionary extends Component {
@@ -37,7 +40,14 @@ class Dictionary extends Component {
       open: false,
       initialValues: {},
     },
-    dictShowed: false,
+    deleteDictionaryModal: {
+      open: false,
+    },
+    dictShowed: true,
+  }
+
+  componentDidMount() {
+    this.getDictionary()
   }
 
   addWord = async () => {
@@ -117,6 +127,17 @@ class Dictionary extends Component {
     getDictionary(dictionary)
   }
 
+  deleteDictionary = async () => {
+    const { router } = this.props
+    const { params: { dictionary } } = router
+    try {
+      await DictApi.deleteDictionary(dictionary)
+      router.push('/dictionaries')
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
   closeModal = () => {
     this.setState({
       addWordForm: {
@@ -131,6 +152,9 @@ class Dictionary extends Component {
         open: false,
         initialValues: {},
       },
+      deleteDictionaryModal: {
+        open: false,
+      }
     })
   }
 
@@ -177,7 +201,7 @@ class Dictionary extends Component {
 
               <Row>
                 <Col md={6} mdPush={3} sm={12}>
-                  <RaisedButton className="dict-header__button" label="Load dictionary" onClick={this.getDictionary} disabled={this.state.dictShowed} />
+                  <RaisedButton className="dict-header__button" label="Delete dictionary" onClick={() => this.openModal('deleteDictionaryModal')} />
                 </Col>
               </Row>
             </Col>
@@ -193,6 +217,10 @@ class Dictionary extends Component {
 
           <Modal title="Delete word" open={this.state.deleteWordModal.open} handleSubmit={this.deleteWord} handleCancel={this.closeModal} >
             <DeleteWordModal word={this.state.deleteWordModal.initialValues.word} />
+          </Modal>
+
+          <Modal title="Delete dictionary" open={this.state.deleteDictionaryModal.open} handleSubmit={this.deleteDictionary} handleCancel={this.closeModal} >
+            <DeleteDictionaryModal name={dictionary} />
           </Modal>
         </div>
         <div className="dict-words">
@@ -231,5 +259,5 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(Dictionary)
+)(withRouter(Dictionary))
 

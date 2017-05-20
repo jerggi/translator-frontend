@@ -8,8 +8,8 @@ import injectTapEventPlugin from 'react-tap-event-plugin'
 injectTapEventPlugin()
 
 import App from './App'
-import Translate from './pages/translate'
-import Dictionaries from './pages/dictionaries'
+import Translate from './pages/Translate'
+import Dictionaries from './pages/Dictionaries'
 import Dictionary from './pages/Dictionary'
 
 import configureStore from './utils/store'

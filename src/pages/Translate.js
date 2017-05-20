@@ -50,7 +50,8 @@ class Translate extends Component {
 
     render() {
         const { dicts, translations } = this.props
-        const dictOptions = map(dicts, option => Object.assign({}, { value: encodeURIComponent(option), label: option}))
+        console.log(dicts)
+        const dictOptions = map(dicts, option => Object.assign({}, { value: encodeURIComponent(option.name), label: option.name}))
 
         return (
             <div style={{ padding: '30px 30px' }}>

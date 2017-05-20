@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
 import RaisedButton from 'material-ui/RaisedButton'
 
 import Modal from '../components/modals/Modal'
@@ -43,6 +44,13 @@ class Dictionaries extends Component {
     this.closeModal()
   }
 
+  handleDictClick = (index) => {
+    const { dictionaries, router } = this.props
+    const name = encodeURIComponent(dictionaries[index].name)
+    
+    router.push(`/dictionaries/${name}`)
+  }
+
   render () {
     const { dictionaries } = this.props
 
@@ -51,9 +59,9 @@ class Dictionaries extends Component {
         <div className="dict-table__header">
           <RaisedButton label="Create dictionary" onClick={this.openModal} />
         </div>
-        <DictionariesTable dictionaries={dictionaries} />
+        <DictionariesTable dictionaries={dictionaries} handleDictClick={this.handleDictClick} />
 
-        <Modal title="Delete word" open={this.state.createDictForm} handleSubmit={this.createDictionary} handleCancel={this.closeModal} >
+        <Modal title="Create dictionary" open={this.state.createDictForm} handleSubmit={this.createDictionary} handleCancel={this.closeModal} >
           <CreateDictionaryForm />
         </Modal>
 
@@ -78,4 +86,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(Dictionaries)
+)(withRouter(Dictionaries))
