@@ -1,16 +1,14 @@
-import React from 'react';
+import React from 'react'
 
-import AppBar from 'material-ui/AppBar';
-import IconButton from 'material-ui/IconButton';
-import IconMenu from 'material-ui/IconMenu';
-import MenuItem from 'material-ui/MenuItem';
+import AppBar from 'material-ui/AppBar'
+import IconButton from 'material-ui/IconButton'
+import IconMenu from 'material-ui/IconMenu'
+import MenuItem from 'material-ui/MenuItem'
 
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-import MenuIcon from 'material-ui/svg-icons/navigation/menu';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
+import MenuIcon from 'material-ui/svg-icons/navigation/menu'
 
-import { Link } from 'react-router';
-
-const Navbar = ({ title }) => (
+const Navbar = ({ title, handlePageChange }) => (
     <AppBar
         title={title}
         iconElementLeft={
@@ -21,15 +19,15 @@ const Navbar = ({ title }) => (
                 targetOrigin={{horizontal: 'left', vertical: 'top'}}
                 anchorOrigin={{horizontal: 'left', vertical: 'top'}}
             >
-                <MenuItem primaryText={
-                    <Link to="/translate" style={{ textDecoration: 'none' }}>
+                <MenuItem onClick={() => handlePageChange('/translate')} primaryText={
+                    <a href="javascript:" style={{ textDecoration: 'none' }}>
                         Translate
-                    </Link>
+                    </a>
                 } />
-                <MenuItem primaryText={
-                    <Link to="/dictionaries" style={{ textDecoration: 'none' }}>
+                <MenuItem onClick={() => handlePageChange('/dictionaries')} primaryText={
+                    <a href="javascript:" style={{ textDecoration: 'none' }}>
                         Dictionaries
-                    </Link>
+                    </a>
                 } />
             </IconMenu>
         }
@@ -40,4 +38,4 @@ Navbar.PropTypes = {
     title: React.PropTypes.string
 }
 
-export default Navbar;
+export default Navbar
