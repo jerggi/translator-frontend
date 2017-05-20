@@ -32,7 +32,7 @@ class Dictionary extends Component {
       open: false,
       initialValues: {},
     },
-    changeWorldForm: {
+    changeWordForm: {
       open: false,
       initialValues: {},
     },
@@ -144,7 +144,7 @@ class Dictionary extends Component {
         open: false,
         initialValues: {},
       },
-      changeWorldForm: {
+      changeWordForm: {
         open: false,
         initialValues: {},
       },
@@ -170,7 +170,7 @@ class Dictionary extends Component {
         >
           <p style={{ marginLeft: '10px' }}>Word <b>{words[index].word}</b></p>
           <Divider />
-          <MenuItem primaryText="Change word" onClick={() => this.openModal('changeWorldForm', { word: words[index].word, newTranslation: words[index].translation })} />
+          <MenuItem primaryText="Change word" onClick={() => this.openModal('changeWordForm', { word: words[index].word, newTranslation: words[index].translation })} />
           <MenuItem primaryText="Delete word" onClick={() => this.openModal('deleteWordModal', { word: words[index].word })} />
         </IconMenu>
         <div style={{ display: 'block' }}>
@@ -211,8 +211,8 @@ class Dictionary extends Component {
             <AddWordForm initialValues={this.state.addWordForm.initialValues} />
           </Modal>
 
-          <Modal title="Change word" open={this.state.changeWorldForm.open} handleSubmit={this.changeWord} handleCancel={this.closeModal} >
-            <ChangeWordForm initialValues={this.state.changeWorldForm.initialValues} />
+          <Modal title="Change word" open={this.state.changeWordForm.open} handleSubmit={this.changeWord} handleCancel={this.closeModal} >
+            <ChangeWordForm initialValues={this.state.changeWordForm.initialValues} />
           </Modal>
 
           <Modal title="Delete word" open={this.state.deleteWordModal.open} handleSubmit={this.deleteWord} handleCancel={this.closeModal} >
