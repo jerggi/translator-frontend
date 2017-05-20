@@ -2,13 +2,14 @@ import React, { Component, PropTypes } from 'react'
 import FlatButton from 'material-ui/FlatButton'
 import TextField from 'material-ui/TextField'
 import Select from 'react-select'
-import { map, sortBy } from 'lodash'
+import { map, sortBy, findIndex } from 'lodash'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 //import { getDictList, translate } from '../actions/translateActions'
 import * as Actions from '../actions/translateActions'
 import TranslateTable from '../components/TranslateTable'
+import {put, get, SELECTED_DICTS} from '../utils/localStorage'
 // import { translate, getDictList } from '../api/translate'
 
 class Translate extends Component {
@@ -20,10 +21,20 @@ class Translate extends Component {
         }
     }
 
-    componentWillMount() {
+    componentDidMount() {
         const { actions: { getDictList } } = this.props
 
-        getDictList()
+        getDictList().then((dicts) => {
+            const selectedDicts = get(SELECTED_DICTS)
+
+            if (selectedDicts) {
+                const filteredDicts = selectedDicts.split(',')
+                    .filter((name) => -1 !== findIndex(dicts, (d) => d.name === name))
+                    .join(',')
+                this.setState({ selectedDicts: filteredDicts })
+            }
+        })
+
     }
 
     translate() {
@@ -45,12 +56,13 @@ class Translate extends Component {
     handleDictChange (dicts) {
         this.setState({
             selectedDicts: dicts
-        });
+        })
+
+        put(SELECTED_DICTS, dicts)
     }
 
     render() {
         const { dicts, translations } = this.props
-        console.log(dicts)
         const dictOptions = map(dicts, option => Object.assign({}, { value: encodeURIComponent(option.name), label: option.name}))
 
         return (

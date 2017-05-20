@@ -29,6 +29,8 @@ export const getDictList = () => async dispatch => {
                 dicts
             }
         })
+
+        return dicts
     } catch (err) {
         console.error(err)
     }

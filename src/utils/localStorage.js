@@ -1,5 +1,5 @@
 export const TOKEN = 'TOKEN'
-export const RECENTLY_SEARCH = 'RECENTLY_SEARCH'
+export const SELECTED_DICTS = 'SELECTED_DICTS'
 
 export const put = (key, value) => { window.localStorage.setItem(key, value) }
 export const get = (key) => window.localStorage.getItem(key)
