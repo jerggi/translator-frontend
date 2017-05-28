@@ -7,10 +7,30 @@ body {
         margin: 20px 50px;
     }
 
-    tr {
-        cursor: pointer;
-        a {
-            text-decoration: none;
+    thead {
+        button {
+            top: 5px;
+        }
+
+        .active {
+            svg {
+                color: #212121;
+            }
+        }
+
+        .inactive {
+            svg {
+                color: #aaa !important;
+            }
+        }
+    }
+
+    tbody {
+        tr {
+            cursor: pointer;
+            a {
+                text-decoration: none;
+            }
         }
     }
 }

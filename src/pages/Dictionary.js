@@ -194,13 +194,13 @@ class Dictionary extends Component {
             </Col>
             <Col sm={6} xs={12}>
               <Row>
-                <Col md={6} mdPush={3} sm={12} >
+                <Col lg={8} lgPush={2} sm={12}>
                   <RaisedButton className="dict-header__button" label="Add word" onClick={() => this.openModal('addWordForm')} />
                 </Col>
               </Row>
 
               <Row>
-                <Col md={6} mdPush={3} sm={12}>
+                <Col lg={8} lgPush={2} sm={12}>
                   <RaisedButton className="dict-header__button" label="Delete dictionary" onClick={() => this.openModal('deleteDictionaryModal')} />
                 </Col>
               </Row>

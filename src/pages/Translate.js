@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import FlatButton from 'material-ui/FlatButton'
 import TextField from 'material-ui/TextField'
 import Select from 'react-select'
-import { map, sortBy, findIndex } from 'lodash'
+import { map, findIndex } from 'lodash'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
@@ -59,7 +59,6 @@ class Translate extends Component {
             await translate(this.state.word, dicts)
             this.setState({ isLoading: false })
         }
-        // translations: sortBy(translations, ['distance'])
     }
 
     openModal = (form, initialValues = {}) => {

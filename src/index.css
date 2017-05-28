@@ -4,10 +4,19 @@ body {
 .dict-table .dict-table__header {
   margin: 20px 50px;
 }
-.dict-table tr {
+.dict-table thead button {
+  top: 5px;
+}
+.dict-table thead .active svg {
+  color: #212121;
+}
+.dict-table thead .inactive svg {
+  color: #aaa !important;
+}
+.dict-table tbody tr {
   cursor: pointer;
 }
-.dict-table tr a {
+.dict-table tbody tr a {
   text-decoration: none;
 }
 .dict-words {

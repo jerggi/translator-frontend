@@ -19,7 +19,7 @@ class App extends React.Component {
         <MuiThemeProvider muiTheme={muiTheme}>
           <div>
             <Navbar title={this.props.router.location.pathname.includes('/dictionaries') ? 'Dictionaries' : 'Translate'} handlePageChange={this.handlePageChange} />
-            <Col sm={10} smPush={1} xs={12}>
+            <Col md={8} mdPush={2} sm={10} smPush={1} xs={12}>
               {this.props.children}
             </Col>
           </div>
