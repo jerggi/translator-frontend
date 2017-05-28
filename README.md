@@ -1,4 +1,8 @@
 # translator-frontend
+Frontend for translator app
+
+### Requirements
+Node.js from version 6
 
 ### Installation
 
